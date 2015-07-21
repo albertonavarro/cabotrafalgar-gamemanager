@@ -1,0 +1,4 @@
+rootProject.name = 'gamemanager'
+include 'springboot'
+include 'devops:docker'
+
