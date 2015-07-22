@@ -29,7 +29,7 @@ public class GameManagerController {
     }
 
     @RequestMapping(value = "/games", method = RequestMethod.PUT)
-    public @ResponseBody GameCreationResult createGame(Game gameInfo) {
+    public @ResponseBody GameCreationResult createGame(final Game gameInfo) {
         return new GameCreationResult(){{setGame(gameRepo.save(gameInfo));}};
     }
 
@@ -39,7 +39,7 @@ public class GameManagerController {
     }
 
     @RequestMapping(value = "/games/{gameid}", method = RequestMethod.PUT)
-    public @ResponseBody UserJoinResult joinGame(User userInfo, @PathVariable("gameid") Long gameId) {
+    public @ResponseBody UserJoinResult joinGame(final User userInfo, @PathVariable("gameid") final Long gameId) {
         return new UserJoinResult(){{setGame(gameRepo.findOne(gameId)); setUser(userRepo.save(userInfo));}};
     }
 
