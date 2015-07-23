@@ -1,5 +1,6 @@
 package com.navid.gamemanager.controller;
 
+import com.navid.gamemanager.events.AbstractEvent;
 import com.navid.gamemanager.websocket.Greetings;
 import com.navid.gamemanager.websocket.Hello;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,14 @@ import java.security.Principal;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class WebSocketController {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/events/{game}")
-    public void greeting3(@DestinationVariable String game, Hello message, @Headers Map<String, String> headers) throws Exception {
-        messagingTemplate.convertAndSend("/topic/game", message);
+    public void sendMessage(@DestinationVariable String game, AbstractEvent message, @Headers Map<String, String> headers) throws Exception {
+        messagingTemplate.convertAndSend("/topic/game/"+game, message);
     }
 
 }
