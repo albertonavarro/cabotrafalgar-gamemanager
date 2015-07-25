@@ -1,9 +1,7 @@
 package com.navid.gamemanager.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by alberto on 7/19/15.
@@ -15,11 +13,30 @@ public class Game {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     private Scope scope;
 
-    private java.lang.String mode;
+    @NotNull
+    private String mode;
 
-    private java.lang.String map;
+    @NotNull
+    private String map;
+
+    @NotNull
+    @ManyToOne
+    private Server server;
+
+    public Game() {
+
+    }
+
+    public Game(Server server, String map, String mode, Scope scope) {
+        this.server = server;
+        this.map = map;
+        this.mode = mode;
+        this.scope = scope;
+    }
+
 
     public Long getId() {
         return id;
@@ -29,19 +46,19 @@ public class Game {
         this.id = id;
     }
 
-    public java.lang.String getMap() {
+    public String getMap() {
         return map;
     }
 
-    public void setMap(java.lang.String map) {
+    public void setMap(String map) {
         this.map = map;
     }
 
-    public java.lang.String getMode() {
+    public String getMode() {
         return mode;
     }
 
-    public void setMode(java.lang.String mode) {
+    public void setMode(String mode) {
         this.mode = mode;
     }
 
@@ -51,5 +68,13 @@ public class Game {
 
     public void setScope(Scope scope) {
         this.scope = scope;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
     }
 }
