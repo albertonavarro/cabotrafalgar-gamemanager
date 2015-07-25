@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'spring-boot'
+apply from: 'mapstruct.gradle'
 
 buildscript {
     repositories {
@@ -25,6 +26,9 @@ repositories {
     maven{
         url="https://oss.sonatype.org/content/repositories/snapshots"
     }
+    maven{
+        url="https://oss.sonatype.org/content/groups/public"
+    }
 }
 
 sourceCompatibility = 1.8
@@ -32,6 +36,7 @@ targetCompatibility = 1.8
 
 dependencies {
     // tag::jetty[]
+    compile project(':rest-client')
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
     }

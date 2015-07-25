@@ -1,19 +1,17 @@
-package com.navid.gamemanager.restclient;
+package com.navid.gamemanager.rest;
 
-import com.navid.gamemanager.domain.Control;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
-/**
- * Created by alberto on 7/25/15.
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddPlayerRequest {
 
     private String role;
 
     private String name;
 
-    private List<Control> controls;
+    private List<RestControl> controls;
 
     public String getRole() {
         return role;
@@ -31,11 +29,11 @@ public class AddPlayerRequest {
         this.name = name;
     }
 
-    public List<Control>  getControls() {
+    public List<RestControl>  getControls() {
         return controls;
     }
 
-    public void setControls(List<Control> controls) {
+    public void setControls(List<RestControl> controls) {
         this.controls = controls;
     }
 }

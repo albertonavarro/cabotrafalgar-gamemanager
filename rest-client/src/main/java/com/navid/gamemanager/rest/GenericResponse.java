@@ -1,10 +1,8 @@
-package com.navid.gamemanager.restclient;
+package com.navid.gamemanager.rest;
 
-import com.navid.gamemanager.domain.Game;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-/**
- * Created by alberto on 7/25/15.
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GenericResponse {
 
     public static enum Status { OK, PARTIAL_OK, ERROR }

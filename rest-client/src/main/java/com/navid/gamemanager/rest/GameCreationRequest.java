@@ -1,28 +1,21 @@
-package com.navid.gamemanager.restclient;
+package com.navid.gamemanager.rest;
 
-import com.navid.gamemanager.domain.Scope;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.validation.constraints.NotNull;
-
-/**
- * Created by alberto on 7/24/15.
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GameCreationRequest {
 
-    @NotNull
-    private Scope scope;
+    private RestScope scope;
 
-    @NotNull
     private String mode;
 
-    @NotNull
     private String map;
 
-    public Scope getScope() {
+    public RestScope getScope() {
         return scope;
     }
 
-    public void setScope(Scope scope) {
+    public void setScope(RestScope scope) {
         this.scope = scope;
     }
 

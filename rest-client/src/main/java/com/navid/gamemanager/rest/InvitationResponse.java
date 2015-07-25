@@ -1,22 +1,19 @@
-package com.navid.gamemanager.restclient;
+package com.navid.gamemanager.rest;
 
-import com.navid.gamemanager.domain.Control;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.net.URL;
-import java.util.Collection;
 
-/**
- * Created by alberto on 7/25/15.
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class InvitationResponse extends GenericResponse {
 
     private final URL url;
 
     private final Long gameId;
 
-    private final Iterable<Control> controls;
+    private final Iterable<RestControl> controls;
 
-    public InvitationResponse(URL url, Long gameId, Iterable<Control> controls) {
+    public InvitationResponse(URL url, Long gameId, Iterable<RestControl> controls) {
         this.url = url;
         this.gameId = gameId;
         this.controls = controls;
@@ -37,7 +34,7 @@ public class InvitationResponse extends GenericResponse {
         return gameId;
     }
 
-    public Iterable<Control> getControls() {
+    public Iterable<RestControl> getControls() {
         return controls;
     }
 }

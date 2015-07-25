@@ -18,6 +18,14 @@ public class Server {
 
     private URL url;
 
+    public Server() {
+
+    }
+
+    public Server(URL url) {
+        this.url = url;
+    }
+
     public URL getUrl() {
         return url;
     }

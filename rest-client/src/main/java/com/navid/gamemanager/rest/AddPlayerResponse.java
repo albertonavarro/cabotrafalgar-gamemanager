@@ -1,19 +1,15 @@
-package com.navid.gamemanager.restclient;
+package com.navid.gamemanager.rest;
 
-import com.navid.gamemanager.domain.Game;
-import com.navid.gamemanager.domain.Invitation;
-import com.navid.gamemanager.domain.Player;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-/**
- * Created by alberto on 7/19/15.
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddPlayerResponse extends GenericResponse {
 
-    private final Player player;
+    private final RestPlayer player;
 
     private final Long invitation;
 
-    public AddPlayerResponse(Player player, Long invitation) {
+    public AddPlayerResponse(RestPlayer player, Long invitation) {
         this.player = player;
         this.invitation = invitation;
     }
@@ -24,7 +20,7 @@ public class AddPlayerResponse extends GenericResponse {
         this.invitation = null;
     }
 
-    public Player getPlayer() {
+    public RestPlayer getPlayer() {
         return player;
     }
 

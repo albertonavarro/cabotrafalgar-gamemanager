@@ -1,15 +1,13 @@
-package com.navid.gamemanager.restclient;
+package com.navid.gamemanager.rest;
 
-import com.navid.gamemanager.domain.Game;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-/**
- * Created by alberto on 7/19/15.
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GameCreationResponse extends GenericResponse {
 
-    private final Game game;
+    private final RestGame game;
 
-    public GameCreationResponse(Game game) {
+    public GameCreationResponse(RestGame game) {
         this.game = game;
     }
 
@@ -18,7 +16,7 @@ public class GameCreationResponse extends GenericResponse {
         this.game = null;
     }
 
-    public Game getGame() {
+    public RestGame getGame() {
         return game;
     }
 }
