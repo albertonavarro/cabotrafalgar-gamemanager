@@ -7,22 +7,16 @@ public class GenericResponse {
 
     public static enum Status { OK, PARTIAL_OK, ERROR }
 
-    private final Status status;
+    private Status status;
 
-    private final String errorCode;
+    private String errorCode;
 
-    private final String errorDescription;
+    private String errorDescription;
 
     public GenericResponse() {
         this.status = Status.OK;
         this.errorCode = null;
         this.errorDescription = null;
-    }
-
-    public GenericResponse(String errorCode, String errorDescription) {
-        this.status = Status.ERROR;
-        this.errorCode = errorCode;
-        this.errorDescription = errorDescription;
     }
 
     public Status getStatus() {
@@ -35,5 +29,25 @@ public class GenericResponse {
 
     public String getErrorDescription() {
         return errorDescription;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+    public static GenericResponse fromError(String errorCode, String errorDescription) {
+        GenericResponse genericResponse = new GenericResponse();
+        genericResponse.setErrorCode(errorCode);
+        genericResponse.setErrorDescription(errorDescription);
+        genericResponse.setStatus(Status.ERROR);
+        return genericResponse;
     }
 }

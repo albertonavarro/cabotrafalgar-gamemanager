@@ -1,22 +1,29 @@
 package com.navid.gamemanager.rest;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GameCreationResponse extends GenericResponse {
 
-    private final RestGame game;
+    private RestGame game;
 
-    public GameCreationResponse(RestGame game) {
-        this.game = game;
-    }
-
-    public GameCreationResponse(String errorCode, String errorDescription) {
-        super(errorCode, errorDescription);
-        this.game = null;
+    public GameCreationResponse() {
     }
 
     public RestGame getGame() {
         return game;
     }
+
+    public void setGame(RestGame game) {
+        this.game = game;
+    }
+
+    public static GameCreationResponse fromGame(RestGame game) {
+        GameCreationResponse response = new GameCreationResponse();
+        response.setGame(game);
+        return response;
+    }
+
 }

@@ -1,37 +1,40 @@
 package com.navid.gamemanager.rest;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GameCreationRequest {
 
-    private RestScope scope;
+    private final RestScope scope;
 
-    private String mode;
+    private final String mode;
 
-    private String map;
+    private final String map;
+
+    @JsonCreator
+    public GameCreationRequest(
+            @JsonProperty("scope") RestScope scope,
+            @JsonProperty("mode")  String mode,
+            @JsonProperty("map")   String map) {
+        this.scope = scope;
+        this.mode = mode;
+        this.map = map;
+    }
 
     public RestScope getScope() {
         return scope;
     }
 
-    public void setScope(RestScope scope) {
-        this.scope = scope;
-    }
 
     public String getMode() {
         return mode;
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
 
     public String getMap() {
         return map;
     }
 
-    public void setMap(String map) {
-        this.map = map;
-    }
 }

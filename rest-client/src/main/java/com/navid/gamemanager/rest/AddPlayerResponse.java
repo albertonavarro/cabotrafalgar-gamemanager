@@ -5,20 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddPlayerResponse extends GenericResponse {
 
-    private final RestPlayer player;
+    private RestPlayer player;
 
-    private final Long invitation;
-
-    public AddPlayerResponse(RestPlayer player, Long invitation) {
-        this.player = player;
-        this.invitation = invitation;
-    }
-
-    public AddPlayerResponse(String errorCode, String errorDescription) {
-        super(errorCode, errorDescription);
-        this.player = null;
-        this.invitation = null;
-    }
+    private Long invitation;
 
     public RestPlayer getPlayer() {
         return player;
@@ -26,5 +15,20 @@ public class AddPlayerResponse extends GenericResponse {
 
     public Long getInvitation() {
         return invitation;
+    }
+
+    public void setInvitation(Long invitation) {
+        this.invitation = invitation;
+    }
+
+    public void setPlayer(RestPlayer player) {
+        this.player = player;
+    }
+
+    public static AddPlayerResponse fromPlayer(RestPlayer player, Long invitation) {
+        AddPlayerResponse response = new AddPlayerResponse();
+        response.setPlayer(player);
+        response.setInvitation(invitation);
+        return response;
     }
 }

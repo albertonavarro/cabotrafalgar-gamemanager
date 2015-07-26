@@ -7,23 +7,22 @@ import java.net.URL;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class InvitationResponse extends GenericResponse {
 
-    private final URL url;
+    private URL url;
 
-    private final Long gameId;
+    private Long gameId;
 
-    private final Iterable<RestControl> controls;
+    private Iterable<RestControl> controls;
 
-    public InvitationResponse(URL url, Long gameId, Iterable<RestControl> controls) {
+    public void setUrl(URL url) {
         this.url = url;
-        this.gameId = gameId;
-        this.controls = controls;
     }
 
-    public InvitationResponse(String errorCode, String errorDescription) {
-        super(errorCode, errorDescription);
-        this.url = null;
-        this.gameId = null;
-        this.controls = null;
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
+    }
+
+    public void setControls(Iterable<RestControl> controls) {
+        this.controls = controls;
     }
 
     public URL getUrl() {
@@ -36,5 +35,13 @@ public class InvitationResponse extends GenericResponse {
 
     public Iterable<RestControl> getControls() {
         return controls;
+    }
+
+    public static InvitationResponse fromUrl(URL url, Long gameId, Iterable<RestControl> controls) {
+        InvitationResponse invitationResponse = new InvitationResponse();
+        invitationResponse.setControls(controls);
+        invitationResponse.setGameId(gameId);
+        invitationResponse.setUrl(url);
+        return invitationResponse;
     }
 }

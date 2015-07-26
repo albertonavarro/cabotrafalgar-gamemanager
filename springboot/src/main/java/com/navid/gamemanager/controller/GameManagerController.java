@@ -16,6 +16,9 @@ import java.net.URL;
 import java.util.Collection;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.navid.gamemanager.rest.AddPlayerResponse.fromPlayer;
+import static com.navid.gamemanager.rest.GenericResponse.fromError;
+import static com.navid.gamemanager.rest.InvitationResponse.fromUrl;
 
 /**
  * Created by alberto on 7/19/15.
@@ -58,7 +61,7 @@ public class GameManagerController {
     public @ResponseBody
     GameCreationResponse createGame(@RequestBody GameCreationRequest gameInfo) {
         Game game = gameRepo.save(new Game(server, gameInfo.getMap(), gameInfo.getMode(), domainMapper.convertScope(gameInfo.getScope())));
-        return new GameCreationResponse(domainMapper.convertGame(game));
+        return GameCreationResponse.fromGame(domainMapper.convertGame(game));
     }
 
     @RequestMapping(value = "/games/{gameid}", method = RequestMethod.GET)
@@ -74,7 +77,7 @@ public class GameManagerController {
         Collection<Control> controls = newArrayList(controlRepo.save(domainMapper.convertControls(playerInfo.getControls())));
         Player player = playerRepo.save(new Player(game, playerInfo.getName(), playerInfo.getRole(), controls));
         Invitation invitation = invitationRepo.save(new Invitation(player));
-        return new AddPlayerResponse(domainMapper.convertPlayer(player), invitation.getId());
+        return fromPlayer(domainMapper.convertPlayer(player), invitation.getId());
     }
 
     @RequestMapping(value = "/invitation/{invitationid}", method = RequestMethod.GET)
@@ -82,7 +85,7 @@ public class GameManagerController {
     InvitationResponse joinGameWithInvitation(@PathVariable("invitationid") Long invitationId) {
         Invitation invitation = invitationRepo.findOne(invitationId);
 
-        return new InvitationResponse(
+        return fromUrl(
                 invitation.getPlayer().getGame().getServer().getUrl(),
                 invitation.getPlayer().getGame().getId(),
                 domainMapper.convertControls(invitation.getPlayer().getControls()));
@@ -92,7 +95,7 @@ public class GameManagerController {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public @ResponseBody
     GenericResponse onError(ConstraintViolationException e) {
-        return new GenericResponse("bad input", e.getMessage());
+        return fromError("bad input", e.getMessage());
     }
 
 }
