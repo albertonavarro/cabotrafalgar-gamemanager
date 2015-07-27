@@ -5,6 +5,7 @@ import com.navid.gamemanager.persistence.*;
 import com.navid.gamemanager.rest.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -89,6 +90,13 @@ public class GameManagerController {
                 invitation.getPlayer().getGame().getServer().getUrl(),
                 invitation.getPlayer().getGame().getId(),
                 domainMapper.convertControls(invitation.getPlayer().getControls()));
+    }
+
+    @RequestMapping(value = "/invitation/{invitationid}", method = RequestMethod.GET, produces = "text/html")
+    public String joinGameWithInvitationWeb(@PathVariable("invitationid") Long invitationId, Model model) {
+        Invitation invitation = invitationRepo.findOne(invitationId);
+
+        return "mode1";
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)
