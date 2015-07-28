@@ -24,14 +24,4 @@ public class Application {
         return DomainMapper.INSTANCE;
     }
 
-
-    /*
-
-    <beans:bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
-        <beans:property name="prefix" value="/WEB-INF/views/" />
-        <beans:property name="suffix" value=".html" />
-        <beans:property name="templateMode" value="HTML5" />
-        <beans:property name="cacheable" value="false" /> <!-- Development only -->
-    </beans:bean>
-     */
 }

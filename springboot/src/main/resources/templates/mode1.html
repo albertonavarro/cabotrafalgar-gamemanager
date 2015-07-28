@@ -4,7 +4,8 @@
     <title>Hello WebSocket</title>
     <script src="//cdn.jsdelivr.net/sockjs/1.0.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script type="text/javascript">
+    <script th:inline="javascript">
+    /*<![CDATA[*/
         var stompClient = null;
 
         function setConnected(connected) {
@@ -15,12 +16,12 @@
         }
 
         function connect() {
-            var socket = new SockJS('/hello');
+            var socket = new SockJS('/'+[[${invitation.player.game.mode}]]);
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
                 setConnected(true);
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/game/1234', function(greeting){
+                stompClient.subscribe('/topic/game/[[${invitation.player.game.id}]]', function(greeting){
                     showGreeting(JSON.parse(greeting.body).eventType);
                 });
             });
@@ -37,7 +38,7 @@
         function sendName() {
             var name = document.getElementById('name').value;
             var structure = { eventType:"command", commandId:"tillerUp", value:"1.0"}
-            stompClient.send("/app/events/1234", {}, JSON.stringify(structure));
+            stompClient.send("/app/events/[[${invitation.player.game.id}]]", {}, JSON.stringify(structure));
         }
 
         function showGreeting(message) {
@@ -47,6 +48,7 @@
             p.appendChild(document.createTextNode(message));
             response.appendChild(p);
         }
+        /*]]>*/
     </script>
 </head>
 <body onload="disconnect()">

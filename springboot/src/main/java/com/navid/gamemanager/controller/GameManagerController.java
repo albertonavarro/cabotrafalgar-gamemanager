@@ -95,7 +95,7 @@ public class GameManagerController {
     @RequestMapping(value = "/invitation/{invitationid}", method = RequestMethod.GET, produces = "text/html")
     public String joinGameWithInvitationWeb(@PathVariable("invitationid") Long invitationId, Model model) {
         Invitation invitation = invitationRepo.findOne(invitationId);
-
+        model.addAttribute("invitation", invitation);
         return "mode1";
     }
 

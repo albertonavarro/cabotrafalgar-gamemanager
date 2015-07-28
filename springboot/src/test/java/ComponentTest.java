@@ -79,4 +79,23 @@ public class ComponentTest {
         assertNull(response.getBody().getErrorDescription());
     }
 
+    @Test
+    public void invitationShouldExist() {
+        HttpEntity<GameCreationRequest> requestGame = new HttpEntity<GameCreationRequest>(new GameCreationRequest(RestScope.PUBLIC, "mode1", "map01"));
+        ResponseEntity<GameCreationResponse> responseGame = template.exchange("http://localhost:8080/games", HttpMethod.PUT, requestGame, GameCreationResponse.class);
+
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest();
+        addPlayerRequest.setName("playerName");
+        addPlayerRequest.setRole("roleName");
+        addPlayerRequest.setControls(
+                new ArrayList(){{
+                    add(new RestControl() {{setName("controlName1"); setType("float"); setGroup("group1");}});
+                    add(new RestControl() {{setName("controlName2"); setType("float"); setGroup("group1");}});}});
+        HttpEntity<AddPlayerRequest> request = new HttpEntity<AddPlayerRequest>(addPlayerRequest);
+        ResponseEntity<AddPlayerResponse> response = template.exchange("http://localhost:8080/games/"+responseGame.getBody().getGame().getId(), HttpMethod.PUT, request, AddPlayerResponse.class);
+
+
+       // template.getForObject()
+    }
+
 }
