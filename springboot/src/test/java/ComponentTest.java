@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.*;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.client.RestTemplate;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -92,9 +93,9 @@ public class ComponentTest {
                     add(new RestControl() {{setName("controlName1"); setType("float"); setGroup("group1");}});
                     add(new RestControl() {{setName("controlName2"); setType("float"); setGroup("group1");}});}});
         HttpEntity<AddPlayerRequest> request = new HttpEntity<AddPlayerRequest>(addPlayerRequest);
-        ResponseEntity<AddPlayerResponse> response = template.exchange("http://localhost:8080/games/"+responseGame.getBody().getGame().getId(), HttpMethod.PUT, request, AddPlayerResponse.class);
+        ResponseEntity<AddPlayerResponse> response = template.exchange("http://localhost:8080/games/" + responseGame.getBody().getGame().getId(), HttpMethod.PUT, request, AddPlayerResponse.class);
 
-
+        JmsTemplate template = new JmsTemplate();
        // template.getForObject()
     }
 
