@@ -2,6 +2,7 @@
 language: java
 # jdk tag
 jdk:
-- openjdk8
+   - openjdk8
+
 script:
-   - gradle clean build distDocker
+   - ./gradlew clean build distDocker
