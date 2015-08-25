@@ -16,21 +16,21 @@ public class Server {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    private URL url;
+    private String url;
 
     public Server() {
 
     }
 
-    public Server(URL url) {
+    public Server(String url) {
         this.url = url;
     }
 
-    public URL getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(URL url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 

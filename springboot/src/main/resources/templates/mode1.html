@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <title>Chat Example Using STOMP Over WebSockets</title>
@@ -51,14 +51,14 @@
                         <div class="control-group">
                             <label>WebSocket URL</label>
                             <div class="controls">
-                                <input name="url" id="connect_url" value="ws://localhost:61614" type="text"/>
+                                <input name="url" id="connect_url" type="text" th:value="${invitation.player.game.server.url}"/>
                             </div>
                         </div>
 
                         <div class="control-group">
                             <label>Destination</label>
                             <div class="controls">
-                                <input id="destination" placeholder="Destination" value="/topic/game/1" type="text"/>
+                                <input id="destination" placeholder="Destination" th:value="${'/topic/game/' + invitation.player.game.id}" type="text"/>
                             </div>
                         </div>
                         <div class="form-actions">
@@ -92,7 +92,7 @@
 <!-- Scripts placed at the end of the document so the pages load faster -->
 <script src="../js/jquery-1.7.2.min.js"></script>
 <script src="../js/stomp.js"></script>
-<script>//<![CDATA[
+<script th:inline="javascript">//<![CDATA[
     $(document).ready(function() {
       if(window.WebSocket) {
         var client, destination;
@@ -151,6 +151,8 @@
         ");
       }
     });
+
+    var allContent = [[${invitation}]];
     //]]></script>
 
 </body>

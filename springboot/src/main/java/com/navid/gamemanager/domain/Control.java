@@ -1,7 +1,5 @@
 package com.navid.gamemanager.domain;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -11,11 +9,22 @@ import java.io.Serializable;
 public class Control {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
+
     private String name;
 
     private String type;
 
     private String controlGroup;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

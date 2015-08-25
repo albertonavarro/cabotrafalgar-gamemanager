@@ -11,6 +11,7 @@ import com.navid.gamemanager.rest.RestScope;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Collection;
@@ -23,9 +24,13 @@ public interface DomainMapper {
 
     RestPlayer convertPlayer(Player player);
 
+    @IterableMapping(elementTargetType = RestPlayer.class)
+    Collection<RestPlayer> convertPlayers(Iterable<Player> players);
+
     @IterableMapping(elementTargetType = RestControl.class)
     Collection<RestControl> convertControls(Iterable<Control> controls);
 
+    @Mapping(source = "controlGroup", target = "group")
     RestControl convertControl(Control control);
 
     Scope convertScope(RestScope scope);
@@ -33,8 +38,9 @@ public interface DomainMapper {
     RestGame convertGame(Game game);
 
     @IterableMapping(elementTargetType = Control.class)
-    Iterable<Control> convertControls(List<RestControl> controls);
+    Iterable<Control> convertControls(Collection<RestControl> controls);
 
+    @Mapping(source = "group", target = "controlGroup")
     Control convertControl(RestControl control);
 
     RestScope convertScope(Scope value);

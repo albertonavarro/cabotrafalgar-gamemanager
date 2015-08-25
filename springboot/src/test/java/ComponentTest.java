@@ -1,7 +1,7 @@
 import com.navid.gamemanager.Application;
 import com.navid.gamemanager.domain.Game;
-import com.navid.gamemanager.domain.Invitation;
 import com.navid.gamemanager.rest.*;
+import com.navid.gamemanager.rest.impl.GameManagerClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,8 +11,8 @@ import org.springframework.web.client.RestTemplate;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -30,6 +30,16 @@ public class ComponentTest {
     @BeforeClass
     public void init() {
         app = new SpringApplication(Application.class).run(new String[0]);
+    }
+
+    @Test
+    public void shouldCreateGameWithClient() {
+        GameManagerClient client = new GameManagerClient("http://localhost:8080");
+        RestGame game = client.createNewGame(RestScope.PUBLIC, "mode1", "map01");
+
+        assertThat(game.getMap(), is("map01"));
+        assertThat(game.getMode(), is("mode1"));
+        assertThat(game.getScope(), is(RestScope.PUBLIC));
     }
 
     @Test
@@ -60,17 +70,27 @@ public class ComponentTest {
 
 
     @Test
+    public void shouldAddPlayerWithClient() {
+        GameManagerClient client = new GameManagerClient("http://localhost:8080");
+        RestGame game = client.createNewGame(RestScope.PUBLIC, "mode1", "map01");
+
+        URL url = client.addPlayer(game,"playerName", "roleName", new ArrayList(){{
+            add(new RestControl("controlName1", "float", "group1"));
+            add(new RestControl("controlName2", "float", "group1"));
+        }});
+
+
+    }
+
+    @Test
     public void shouldAddPlayer() {
         HttpEntity<GameCreationRequest> requestGame = new HttpEntity<GameCreationRequest>(new GameCreationRequest(RestScope.PUBLIC, "mode1", "map01"));
         ResponseEntity<GameCreationResponse> responseGame = template.exchange("http://localhost:8080/games", HttpMethod.PUT, requestGame, GameCreationResponse.class);
 
-        AddPlayerRequest addPlayerRequest = new AddPlayerRequest();
-        addPlayerRequest.setName("playerName");
-        addPlayerRequest.setRole("roleName");
-        addPlayerRequest.setControls(
-                new ArrayList(){{
-                    add(new RestControl() {{setName("controlName1"); setType("float"); setGroup("group1");}});
-                    add(new RestControl() {{setName("controlName2"); setType("float"); setGroup("group1");}});}});
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest("playerName", "roleName", new ArrayList(){{
+            add(new RestControl("controlName1", "float", "group1"));
+            add(new RestControl("controlName2", "float", "group1"));
+        }});
         HttpEntity<AddPlayerRequest> request = new HttpEntity<AddPlayerRequest>(addPlayerRequest);
         ResponseEntity<AddPlayerResponse> response = template.exchange("http://localhost:8080/games/"+responseGame.getBody().getGame().getId(), HttpMethod.PUT, request, AddPlayerResponse.class);
 
@@ -85,13 +105,10 @@ public class ComponentTest {
         HttpEntity<GameCreationRequest> requestGame = new HttpEntity<GameCreationRequest>(new GameCreationRequest(RestScope.PUBLIC, "mode1", "map01"));
         ResponseEntity<GameCreationResponse> responseGame = template.exchange("http://localhost:8080/games", HttpMethod.PUT, requestGame, GameCreationResponse.class);
 
-        AddPlayerRequest addPlayerRequest = new AddPlayerRequest();
-        addPlayerRequest.setName("playerName");
-        addPlayerRequest.setRole("roleName");
-        addPlayerRequest.setControls(
-                new ArrayList(){{
-                    add(new RestControl() {{setName("controlName1"); setType("float"); setGroup("group1");}});
-                    add(new RestControl() {{setName("controlName2"); setType("float"); setGroup("group1");}});}});
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest("playerName", "roleName", new ArrayList(){{
+            add(new RestControl("controlName1", "float", "group1"));
+            add(new RestControl("controlName2", "float", "group1"));
+        }});
         HttpEntity<AddPlayerRequest> request = new HttpEntity<AddPlayerRequest>(addPlayerRequest);
         ResponseEntity<AddPlayerResponse> response = template.exchange("http://localhost:8080/games/" + responseGame.getBody().getGame().getId(), HttpMethod.PUT, request, AddPlayerResponse.class);
 
