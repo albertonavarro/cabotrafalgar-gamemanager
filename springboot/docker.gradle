@@ -2,3 +2,8 @@ apply plugin: 'docker'
 
 group = "albertonavarro"
 applicationName = "gamemanager"
+
+distDocker {
+    push = true
+
+}
