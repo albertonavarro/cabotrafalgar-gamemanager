@@ -90,12 +90,12 @@
         var controlElement = document.createElement("control"+ index);
         controlElement.appendChild(document.createTextNode(control.name));
         var controlDestination = '/topic/game/' + allContent.player.game.id + '/user/' + control.name.replace(/ /g, "_");;
-        createButton(controlElement, control.name, function(){
+
+      $("#controls").append(createButton(controlElement, control.name, function(){
           client.send(controlDestination, {}, "{ \"value\":1.00}");
         }, function() {
           client.send(controlDestination, {}, "{ \"value\":0.00}");
-        });
-      $("#controls").append(controlElement);
+        }));
 
      });
 
@@ -150,8 +150,10 @@
       button.type = "button";
       button.value = name;
       button.onfocus = func1;
-       button.onblur = func2;
-      context.appendChild(button);
+      button.onblur = func2;
+      button.style.height = "200px"
+      button.style.width = "200px"
+      return button;
     }
 
     var allContent = [[${invitation}]];
