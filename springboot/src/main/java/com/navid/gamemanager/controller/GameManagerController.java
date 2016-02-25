@@ -35,7 +35,7 @@ public class GameManagerController {
 
     private volatile Server server;
 
-    @Value("${gamemanager.url:ws://gamemanager.trafalgar.ws:61614}")
+    @Value("${gamemanager.url:ws://gamemanager.trafalgar.ws:7002}")
     private String serverExternalURL;
 
     @Resource
