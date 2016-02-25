@@ -17,7 +17,6 @@ apply from: 'docker.gradle'
 
 jar {
     baseName = 'gamemanager'
-    version =  '0.1.0'
 }
 
 repositories {
