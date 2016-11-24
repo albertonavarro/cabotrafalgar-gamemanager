@@ -54,6 +54,8 @@ dependencies {
     compile("com.h2database:h2")
     compile("com.google.guava:guava:18.0")
     compile('io.netty:netty-all:4.0.30.Final')
+    compile 'ch.qos.logback:logback-classic:1.1.6'
+    runtime 'net.logstash.logback:logstash-logback-encoder:4.8'
     // end::actuator[]
     testCompile("junit:junit")
 }
