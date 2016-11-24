@@ -38,8 +38,8 @@ artifacts {
 }
 
 bintray {
-    user = 'albertonavarro'
-    key = 'bfa06e432dcab15d56ca5e341fe395b42162c181'
+    user = repositoryUser
+    key = repositoryPassword
     configurations = ['archives']
     publish = true
     pkg {

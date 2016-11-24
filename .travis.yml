@@ -1,0 +1,15 @@
+sudo: required
+language: java
+jdk:
+  - oraclejdk8
+script:
+    - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+    - ./gradlew clean build distDocker
+    - docker tag albertonavarro/gamemanager:travis_"$TRAVIS_BUILD_NUMBER" albertonavarro/gamemanager:readytotest
+    - docker push albertonavarro/gamemanager:readytotest
+    - ./gradlew deploy_tools:waitUntilDeployed -P deploy_endpoint="$TEST_SERVER"/info -P deploy_expected_version=travis_"$TRAVIS_BUILD_NUMBER"
+    - docker tag albertonavarro/gamemanager:travis_"$TRAVIS_BUILD_NUMBER" albertonavarro/gamemanager:readyforprod
+    - docker push albertonavarro/gamemanager:readyforprod
+    - ./gradlew deploy_tools:waitUntilDeployed -P deploy_endpoint="$PROD_SERVER"/info -P deploy_expected_version=travis_"$TRAVIS_BUILD_NUMBER"
+services:
+  - docker
