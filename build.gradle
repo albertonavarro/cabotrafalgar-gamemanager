@@ -1,3 +1,2 @@
 allprojects  {
-    version = System.getenv("SNAP_PIPELINE_COUNTER") ?: "UNSET"
 }
