@@ -2,4 +2,4 @@ rootProject.name = 'gamemanager'
 include 'springboot'
 include 'devops:docker'
 include 'rest-client'
-
+include 'deploy_tools'
